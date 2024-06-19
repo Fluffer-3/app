@@ -10,19 +10,13 @@ import * as SecureStore from "expo-secure-store";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { RetryLink } from "@apollo/client/link/retry";
-import { Platform } from "react-native";
 
 const httpLink = createHttpLink({
     uri: process.env.EXPO_PUBLIC_API_URL
 });
 
 const authLink = setContext((_, { headers }) => {
-    let token = null;
-    if (Platform.OS === "web") {
-        token = localStorage.getItem("ff-token");
-    } else {
-        token = SecureStore.getItem("ff-token");
-    }
+    const token = SecureStore.getItem("ff-token");
 
     return {
         headers: {
