@@ -39,7 +39,7 @@ export default function SignInScreen() {
                 username: null
             });
 
-            login(JSON.stringify(userData));
+            login(userData);
 
             router.push("/");
         },
