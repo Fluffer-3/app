@@ -28,7 +28,6 @@ const authLink = setContext((_, { headers }) => {
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (process.env.NODE_ENV !== "development") return;
-    console.log(networkError);
     if (graphQLErrors) {
         graphQLErrors.forEach(({ message, locations, path, source }) => {
             console.log(

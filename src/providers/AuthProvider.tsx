@@ -1,10 +1,12 @@
 import { PropsWithChildren, createContext, useContext } from "react";
-import { useStorageState } from "@/lib/useStorageState";
+import * as SecureStore from "expo-secure-store";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "@/reducers/auth";
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
     isLoggedIn: false,
-    login: (userData: any) => userData,
+    login: (userData: User) => userData,
     logout: () => {}
 });
 
@@ -17,15 +19,27 @@ export function useAuth() {
 }
 
 export function AuthProvider(props: PropsWithChildren) {
-    const [[_, user], setUser] = useStorageState("user");
+    const dispatch = useDispatch();
+    const user = useSelector((state: any) => state.auth.user);
+
+    const loginUser = (userData: UserWithToken) => {
+        SecureStore.setItem("ff-token", userData.token);
+        const { token: _, ...user } = userData;
+        dispatch(login(user));
+    };
+
+    const logoutUser = () => {
+        SecureStore.deleteItemAsync("ff-token");
+        dispatch(logout());
+    };
 
     return (
         <AuthContext.Provider
             value={{
                 user,
                 isLoggedIn: !!user,
-                login: (userData: any) => setUser(userData),
-                logout: () => setUser(null)
+                login: loginUser,
+                logout: logoutUser
             }}
         >
             {props.children}

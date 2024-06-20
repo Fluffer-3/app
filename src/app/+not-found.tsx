@@ -4,11 +4,11 @@ import { Text } from "@/components/ui/text";
 
 export default function NotFoundScreen() {
     return (
-        <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
-            <Text>This screen doesn't exist.</Text>
-
+        <View className="flex-1 justify-center items-center gap-5">
+            <Text className="text-4xl font-bold">🤔 Oops</Text>
+            <Text className="text-xl">How did we end up here?</Text>
             <Link href="/">
-                <Text>Go to home screen!</Text>
+                <Text className="text-lg font-bold">Go back</Text>
             </Link>
         </View>
     );

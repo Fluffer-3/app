@@ -16,6 +16,9 @@ import { persistCache } from "apollo3-cache-persist";
 import APIProvider, { cache } from "@/providers/APIProvider";
 import { useApolloClientDevTools } from "@dev-plugins/apollo-client";
 import { AuthProvider } from "@/providers/AuthProvider";
+import { Provider } from "react-redux";
+import { persistor, store } from "@/reducers";
+import { PersistGate } from "redux-persist/integration/react";
 
 const LIGHT_THEME: Theme = {
     dark: false,
@@ -87,28 +90,34 @@ export default function RootLayout() {
     }
 
     return (
-        <ApolloProvider client={APIProvider}>
-            <AuthProvider>
-                <ThemeProvider
-                    value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}
-                >
-                    <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-                    <Stack
-                        initialRouteName="log-in"
-                        screenOptions={{
-                            headerBackVisible: false,
-                            title: "",
-                            headerRight: () => <ThemeToggle />
-                        }}
-                    >
-                        <Stack.Screen name="log-in" />
-                        <Stack.Screen name="sign-up" />
-                        <Stack.Screen name="+not-found" />
-                    </Stack>
-                    <PortalHost />
-                </ThemeProvider>
-            </AuthProvider>
-        </ApolloProvider>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <ApolloProvider client={APIProvider}>
+                    <AuthProvider>
+                        <ThemeProvider
+                            value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}
+                        >
+                            <StatusBar
+                                style={isDarkColorScheme ? "light" : "dark"}
+                            />
+                            <Stack
+                                initialRouteName="log-in"
+                                screenOptions={{
+                                    headerBackVisible: false,
+                                    title: "",
+                                    headerRight: () => <ThemeToggle />
+                                }}
+                            >
+                                <Stack.Screen name="log-in" />
+                                <Stack.Screen name="sign-up" />
+                                <Stack.Screen name="+not-found" />
+                            </Stack>
+                            <PortalHost />
+                        </ThemeProvider>
+                    </AuthProvider>
+                </ApolloProvider>
+            </PersistGate>
+        </Provider>
     );
 }
 
