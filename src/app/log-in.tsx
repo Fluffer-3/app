@@ -86,8 +86,11 @@ export default function SignInScreen() {
     });
 
     return (
-        <KeyboardAvoidingView className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
-            <Card className="w-full max-w-sm p-6 rounded-2xl">
+        <KeyboardAvoidingView
+            behavior="padding"
+            className="flex-1 justify-center items-center gap-5 p-6"
+        >
+            <Card className="w-full max-w-sm p-10 rounded-2xl bg-secondary/20">
                 <CardContent>
                     <View className="flex-col gap-3 items-center justify-center">
                         <Text className="text-center">
