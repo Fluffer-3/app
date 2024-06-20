@@ -4,6 +4,7 @@ import { Text } from "@/components/ui/text";
 
 export default function Index() {
     const { logout } = useAuth();
+
     return (
         <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
