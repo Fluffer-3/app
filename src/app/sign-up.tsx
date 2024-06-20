@@ -34,7 +34,7 @@ export default function SignUpScreen() {
 
     const [successful, setSuccessful] = useState(false);
 
-    const [signupuser] = useMutation(SignupUser, {
+    const [signupUser] = useMutation(SignupUser, {
         update: () => {
             setErrors({
                 email: null,
@@ -87,31 +87,34 @@ export default function SignUpScreen() {
         variables: creds
     });
 
-    return successful ? (
-        <KeyboardAvoidingView
-            behavior="padding"
-            className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30"
-        >
-            <Card className="w-full max-w-sm p-6 rounded-2xl">
-                <CardContent>
-                    <View className="flex-col gap-3 items-center justify-center">
-                        <Text className="text-center">
-                            Signed up for{" "}
-                            <Text className="font-bold">Fluffer</Text>
-                        </Text>
-                        <Text className="text-green-500 text-center">
-                            Account created successfully
-                        </Text>
-                    </View>
-                </CardContent>
-                <CardFooter className="flex-col gap-3 pb-0">
-                    <Button onPress={() => router.push("/")}>
-                        <Text>Sign in</Text>
-                    </Button>
-                </CardFooter>
-            </Card>
-        </KeyboardAvoidingView>
-    ) : (
+    if (successful)
+        return (
+            <KeyboardAvoidingView
+                behavior="padding"
+                className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30"
+            >
+                <Card className="w-full max-w-sm p-6 rounded-2xl">
+                    <CardContent>
+                        <View className="flex-col gap-3 items-center justify-center">
+                            <Text className="text-center">
+                                Signed up for{" "}
+                                <Text className="font-bold">Fluffer</Text>
+                            </Text>
+                            <Text className="text-green-500 text-center">
+                                Account created successfully
+                            </Text>
+                        </View>
+                    </CardContent>
+                    <CardFooter className="flex-col gap-3 pb-0">
+                        <Button onPress={() => router.push("/")}>
+                            <Text>Sign in</Text>
+                        </Button>
+                    </CardFooter>
+                </Card>
+            </KeyboardAvoidingView>
+        );
+
+    return (
         <KeyboardAvoidingView
             behavior="padding"
             className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30"
@@ -200,7 +203,7 @@ export default function SignUpScreen() {
                     </View>
                 </CardContent>
                 <CardFooter className="flex-col gap-3 pb-0">
-                    <Button onPress={() => signupuser()}>
+                    <Button onPress={() => signupUser()}>
                         <Text>Submit</Text>
                     </Button>
                     <Text className="text-center text-muted-foreground">
