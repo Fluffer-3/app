@@ -1,4 +1,4 @@
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Stack, Tabs } from "expo-router";
 
 import { useAuth } from "@/providers/AuthProvider";
 
@@ -10,8 +10,9 @@ export default function AuthGuard() {
     }
 
     return (
-        <Stack initialRouteName="index" screenOptions={{ header: () => <></> }}>
-            <Stack.Screen name="index" />
-        </Stack>
+        <Tabs initialRouteName="posts" screenOptions={{ header: () => <></> }}>
+            <Tabs.Screen name="posts" />
+            <Tabs.Screen name="servers" />
+        </Tabs>
     );
 }

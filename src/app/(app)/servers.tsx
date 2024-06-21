@@ -18,7 +18,7 @@ export default function Index() {
             >
                 Sign Out
             </Text>
-            <Text className="text-4xl font-bold">👋 Hello, Posts!</Text>
+            <Text className="text-4xl font-bold">👋 Hello, Servers!</Text>
         </View>
     );
 }
