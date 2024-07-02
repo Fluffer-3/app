@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack, usePathname } from "expo-router";
 import ThemeToggle from "@/components/ThemeToggle";
 
 export {
@@ -7,18 +7,14 @@ export {
 } from "expo-router";
 
 export default function RootLayout() {
+    console.log("RootLayout", { pathname: usePathname() });
     return (
         <Stack
-            initialRouteName="log-in"
             screenOptions={{
-                headerBackVisible: false,
                 title: "",
-                headerRight: () => <ThemeToggle />
+                headerBackVisible: false,
+                headerLeft: () => <ThemeToggle />
             }}
-        >
-            <Stack.Screen name="log-in" />
-            <Stack.Screen name="sign-up" />
-            <Stack.Screen name="+not-found" />
-        </Stack>
+        />
     );
 }

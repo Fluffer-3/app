@@ -47,3 +47,9 @@ declare type User = {
 declare type UserWithToken = User & {
     token: string;
 };
+
+declare type AppModeContextType = {
+    appMode: "servers" | "posts";
+    setAppMode: (appMode: "servers" | "posts") => void;
+    changeAppMode: (appMode: "servers" | "posts") => void;
+};

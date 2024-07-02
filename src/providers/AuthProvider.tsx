@@ -23,8 +23,7 @@ export function AuthProvider(props: PropsWithChildren) {
     const user = useSelector((state: any) => state.auth.user);
 
     const loginUser = (userData: UserWithToken) => {
-        SecureStore.setItem("ff-token", userData.token);
-        const { token: _, ...user } = userData;
+        const { token, ...user } = userData;
         dispatch(login(user));
     };
 

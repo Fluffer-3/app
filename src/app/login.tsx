@@ -15,7 +15,7 @@ export default function SignInScreen() {
     const { isLoggedIn, login } = useAuth();
 
     useEffect(() => {
-        if (isLoggedIn) router.push("/");
+        if (isLoggedIn) router.push("/servers");
     }, [isLoggedIn]);
 
     const [creds, setCreds] = useState<LoginCredentials>({

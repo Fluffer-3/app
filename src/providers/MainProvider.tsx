@@ -17,8 +17,6 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistCache } from "apollo3-cache-persist";
 import { SplashScreen } from "expo-router";
-import { Platform } from "react-native";
-import { PortalHost } from "@/components/primitives/portal";
 import { store, persistor } from "@/reducers";
 import { Theme, ThemeProvider } from "@react-navigation/native";
 import { Provider } from "react-redux";
@@ -27,6 +25,7 @@ import { AuthProvider } from "./AuthProvider";
 import { NAV_THEME } from "@/lib/constants";
 import { useColorScheme } from "@/lib/useColorScheme";
 import { StatusBar } from "expo-status-bar";
+import { PortalHost } from "@/components/primitives/portal";
 
 const httpLink = createHttpLink({
     uri: process.env.EXPO_PUBLIC_API_URL
@@ -101,10 +100,6 @@ export default function MainProvider(props: PropsWithChildren) {
     useEffect(() => {
         (async () => {
             const theme = await AsyncStorage.getItem("theme");
-            if (Platform.OS === "web") {
-                // Adds the background color to the html element to prevent white background on overscroll.
-                document.documentElement.classList.add("bg-background");
-            }
             if (!theme) {
                 AsyncStorage.setItem("theme", colorScheme);
                 setIsColorSchemeLoaded(true);
@@ -122,16 +117,9 @@ export default function MainProvider(props: PropsWithChildren) {
             SplashScreen.hideAsync();
         });
 
-        let storage = null;
-        if (Platform.OS === "web") {
-            storage = localStorage;
-        } else {
-            storage = AsyncStorage;
-        }
-
         persistCache({
             cache,
-            storage
+            storage: AsyncStorage
         }).then(() => setLoadingCache(false));
     }, [colorScheme, setColorScheme]);
 
